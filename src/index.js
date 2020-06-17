@@ -1,24 +1,22 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
+import { Provider } from 'react-redux'
 import { ThemeProvider } from '@material-ui/core/styles'
 import CssBaseline from '@material-ui/core/CssBaseline'
 
-// utils
-import theme from './theme'
+import configureAppStore from 'core/Store'
 
-// assets
+import App from 'view/App'
+import theme from 'view/theme'
 
-// actions
-
-// components
-import App from './App'
-
-// self-defined-components
+const store = configureAppStore()
 
 ReactDOM.render(
-  <ThemeProvider theme={theme}>
-    <CssBaseline />
-    <App />
-  </ThemeProvider>,
+  <Provider store={store}>
+    <ThemeProvider theme={theme}>
+      <CssBaseline />
+      <App />
+    </ThemeProvider>
+  </Provider>,
   document.getElementById('root')
 )
