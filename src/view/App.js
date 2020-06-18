@@ -7,11 +7,12 @@ import React from 'react'
 // actions
 
 // components
+import Class from 'view/Class'
 
 // self-defined-components
 
 const App = () => {
-  return <div>App</div>
+  return <Class />
 }
 
 export default App
