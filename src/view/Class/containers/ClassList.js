@@ -54,8 +54,8 @@ const ClassListContainer = ({
 }
 
 const mapStateToProps = (state) => ({
-  students: state.class.studentlist.students,
-  isLoading: state.class.studentlist.isLoading,
+  students: state.class.students,
+  isLoading: state.class.isLoading,
 })
 
 const mapDispatchToProps = (dispatch) =>

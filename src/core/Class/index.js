@@ -1,7 +1,8 @@
-export { default as classReducer } from './reducer'
-export { getStudentsByListId } from './api'
 export {
+  default as classReducer,
   fetchStudentlistAsync,
   fetchStudentlistSuccess,
   fetchStudentlistFailure,
-} from './action'
+} from './slice'
+
+export { getStudentsByListId } from './api'
