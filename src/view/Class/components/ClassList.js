@@ -48,61 +48,13 @@ const tableColumns = [
   { key: 'reset', label: '重設密碼' },
   { key: 'actions', label: '操作' },
 ]
-const tableRows = [
-  {
-    id: '1',
-    name: '123',
-    username: '123',
-    parent: '123',
-    reset: '123',
-    actions: '123',
-  },
-  {
-    id: '2',
-    name: '456',
-    username: '456',
-    parent: '456',
-    reset: '456',
-    actions: '456',
-  },
-  {
-    id: '3',
-    name: '789',
-    username: '789',
-    parent: '789',
-    reset: '789',
-    actions: '789',
-  },
-  {
-    id: '4',
-    name: '321',
-    username: '321',
-    parent: '321',
-    reset: '321',
-    actions: '321',
-  },
-  {
-    id: '5',
-    name: '654',
-    username: '654',
-    parent: '654',
-    reset: '654',
-    actions: '654',
-  },
-]
 
-const ClassList = () => {
+const ClassList = ({ onTabClick, students, isLoading }) => {
   const classes = useStyles()
-
-  const handleTabClick = (value) => {
-    console.log(value)
-  }
-
-  const isLoading = true
 
   return (
     <div className={classes.root}>
-      <CommonVerticalTabs onTabClick={handleTabClick} tabs={tabs}>
+      <CommonVerticalTabs onTabClick={onTabClick} tabs={tabs}>
         <Box className={classes.box}>
           {isLoading ? (
             <ReactLoading
@@ -113,7 +65,7 @@ const ClassList = () => {
               width={100}
             />
           ) : (
-            <CommonTable columns={tableColumns} rows={tableRows} />
+            <CommonTable columns={tableColumns} rows={students} />
           )}
         </Box>
       </CommonVerticalTabs>

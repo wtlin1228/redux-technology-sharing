@@ -7,7 +7,7 @@ import React from 'react'
 // actions
 
 // components
-import ClassList from './components/ClassList'
+import ClassList from './containers/ClassList'
 
 // self-defined-components
 
