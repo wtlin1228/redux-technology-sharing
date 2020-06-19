@@ -1,4 +1,6 @@
-import { createSlice } from '@reduxjs/toolkit'
+import { createSlice, createAction } from '@reduxjs/toolkit'
+
+const namespace = 'class'
 
 const initialState = {
   isLoading: false,
@@ -8,10 +10,10 @@ const initialState = {
 }
 
 const classSlice = createSlice({
-  name: 'class',
+  name: namespace,
   initialState,
   reducers: {
-    fetchStudentlistAsync: (state, action) => {
+    fetchStudentlist: (state, action) => {
       state.isLoading = true
     },
 
@@ -34,10 +36,16 @@ const classSlice = createSlice({
   },
 })
 
+classSlice.asyncActions = {
+  fetchStudentlistAsync: createAction(`${namespace}/fetchStudentlistAsync`),
+}
+
 export const {
-  fetchStudentlistAsync,
+  fetchStudentlist,
   fetchStudentlistSuccess,
   fetchStudentlistFailure,
 } = classSlice.actions
+
+export const { fetchStudentlistAsync } = classSlice.asyncActions
 
 export default classSlice.reducer

@@ -1,6 +1,7 @@
 export {
   default as classReducer,
   fetchStudentlistAsync,
+  fetchStudentlist,
   fetchStudentlistSuccess,
   fetchStudentlistFailure,
 } from './slice'
@@ -8,3 +9,5 @@ export {
 export { getStudentsByListId } from './api'
 
 export { studentsCountSelector } from './selectors'
+
+export { default as classSaga } from './sagas'
