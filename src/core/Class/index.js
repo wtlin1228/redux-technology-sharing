@@ -6,3 +6,5 @@ export {
 } from './slice'
 
 export { getStudentsByListId } from './api'
+
+export { studentsCountSelector } from './selectors'

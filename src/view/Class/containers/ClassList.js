@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 
 // utils
-import { getStudentsByListId } from 'core/Class'
+import { getStudentsByListId, studentsCountSelector } from 'core/Class'
 
 // assets
 
@@ -22,6 +22,7 @@ import ClassList from '../components/ClassList'
 const ClassListContainer = ({
   students,
   isLoading,
+  studentsCount,
   fetchStudentlistAsync,
   fetchStudentlistSuccess,
   fetchStudentlistFailure,
@@ -45,17 +46,23 @@ const ClassListContainer = ({
   }, [selectedListId, handleClassChange])
 
   return (
-    <ClassList
-      onTabClick={setSelectedListId}
-      students={students}
-      isLoading={isLoading}
-    />
+    <>
+      <h1 style={{ position: 'fixed', top: 0, left: 24 }}>
+        學生數：{studentsCount}
+      </h1>
+      <ClassList
+        onTabClick={setSelectedListId}
+        students={students}
+        isLoading={isLoading}
+      />
+    </>
   )
 }
 
 const mapStateToProps = (state) => ({
   students: state.class.students,
   isLoading: state.class.isLoading,
+  studentsCount: studentsCountSelector(state),
 })
 
 const mapDispatchToProps = (dispatch) =>
