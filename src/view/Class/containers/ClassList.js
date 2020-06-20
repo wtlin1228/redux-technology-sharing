@@ -1,6 +1,5 @@
 import React, { useState, useEffect, useCallback } from 'react'
-import { connect } from 'react-redux'
-import { bindActionCreators } from 'redux'
+import { useDispatch, useSelector } from 'react-redux'
 
 // utils
 import { studentsCountSelector } from 'core/Class'
@@ -15,17 +14,19 @@ import ClassList from '../components/ClassList'
 
 // self-defined-components
 
-const ClassListContainer = ({
-  students,
-  isLoading,
-  studentsCount,
-  fetchStudentlistAsync,
-}) => {
+const ClassListContainer = () => {
+  const dispatch = useDispatch()
+
   const [selectedListId, setSelectedListId] = useState('0')
 
+  const isLoading = useSelector((state) => state.class.isLoading)
+  const students = useSelector((state) => state.class.students)
+
+  const studentsCount = useSelector(studentsCountSelector)
+
   const handleClassChange = useCallback(
-    (listId) => fetchStudentlistAsync({ listId }),
-    [fetchStudentlistAsync]
+    (listId) => dispatch(fetchStudentlistAsync({ listId })),
+    [dispatch]
   )
 
   useEffect(() => {
@@ -46,18 +47,4 @@ const ClassListContainer = ({
   )
 }
 
-const mapStateToProps = (state) => ({
-  students: state.class.students,
-  isLoading: state.class.isLoading,
-  studentsCount: studentsCountSelector(state),
-})
-
-const mapDispatchToProps = (dispatch) =>
-  bindActionCreators(
-    {
-      fetchStudentlistAsync,
-    },
-    dispatch
-  )
-
-export default connect(mapStateToProps, mapDispatchToProps)(ClassListContainer)
+export default ClassListContainer
