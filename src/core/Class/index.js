@@ -10,4 +10,4 @@ export { getStudentsByListId } from './api'
 
 export { studentsCountSelector } from './selectors'
 
-export { default as classSaga } from './sagas'
+export { default as classEpic } from './epics'

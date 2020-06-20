@@ -1,19 +1,19 @@
 import { configureStore } from '@reduxjs/toolkit'
-import createSagaMiddleware from 'redux-saga'
-import rootSaga from './rootSaga'
+import { createEpicMiddleware } from 'redux-observable'
+import rootEpic from './rootEpic'
 import rootReducer from './rootReducer'
 
-const sagaMiddleware = createSagaMiddleware()
+const epicMiddleware = createEpicMiddleware()
 
 export default function configureAppStore(preloadedState) {
   const store = configureStore({
     reducer: rootReducer,
-    middleware: [sagaMiddleware],
+    middleware: [epicMiddleware],
     preloadedState,
     enhancers: [],
   })
 
-  sagaMiddleware.run(rootSaga)
+  epicMiddleware.run(rootEpic)
 
   return store
 }

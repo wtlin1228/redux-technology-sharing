@@ -31,7 +31,10 @@ const classSlice = createSlice({
     },
 
     fetchStudentlistFailure: (state, action) => {
-      state = initialState
+      state.isLoading = initialState.isLoading
+      state.listId = initialState.listId
+      state.coachName = initialState.coachName
+      state.students = initialState.students
     },
   },
 })
