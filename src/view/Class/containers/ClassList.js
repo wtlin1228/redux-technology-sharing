@@ -1,13 +1,17 @@
-import React, { useState, useEffect, useCallback } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
+import React, { useState, useEffect } from 'react'
 
 // utils
-import { studentsCountSelector } from 'core/Class'
+import { getStudentsByListId } from 'core/Class'
+import { useClassContext } from 'context/Class'
 
 // assets
 
 // actions
-import { fetchStudentlistAsync } from 'core/Class'
+import {
+  fetchStudentlistAsync,
+  fetchStudentlistSuccess,
+  fetchStudentlistFailure,
+} from 'context/Class'
 
 // components
 import ClassList from '../components/ClassList'
@@ -15,23 +19,19 @@ import ClassList from '../components/ClassList'
 // self-defined-components
 
 const ClassListContainer = () => {
-  const dispatch = useDispatch()
-
   const [selectedListId, setSelectedListId] = useState('0')
 
-  const isLoading = useSelector((state) => state.class.isLoading)
-  const students = useSelector((state) => state.class.students)
-
-  const studentsCount = useSelector(studentsCountSelector)
-
-  const handleClassChange = useCallback(
-    (listId) => dispatch(fetchStudentlistAsync({ listId })),
-    [dispatch]
-  )
+  const [classState, classDispatcher] = useClassContext()
 
   useEffect(() => {
-    handleClassChange(selectedListId)
-  }, [selectedListId, handleClassChange])
+    classDispatcher(fetchStudentlistAsync({ listId: selectedListId }))
+    getStudentsByListId(selectedListId)
+      .then((response) => classDispatcher(fetchStudentlistSuccess(response)))
+      .catch((error) => classDispatcher(fetchStudentlistFailure(error)))
+  }, [selectedListId, classDispatcher])
+
+  const { isLoading, students } = classState
+  const studentsCount = students.length
 
   return (
     <>

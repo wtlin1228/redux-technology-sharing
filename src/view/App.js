@@ -1,6 +1,7 @@
 import React from 'react'
 
 // utils
+import { ClassProvider } from 'context/Class'
 
 // assets
 
@@ -12,7 +13,11 @@ import Class from 'view/Class'
 // self-defined-components
 
 const App = () => {
-  return <Class />
+  return (
+    <ClassProvider>
+      <Class />
+    </ClassProvider>
+  )
 }
 
 export default App
