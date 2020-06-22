@@ -1,15 +1,15 @@
 import { useReducer } from 'react'
 import constate from 'constate'
-import classReducer, { classState } from './reducer'
+import classReducer, { initialState } from './slice'
 
 export {
   fetchStudentlistAsync,
   fetchStudentlistSuccess,
   fetchStudentlistFailure,
-} from './action.js'
+} from './slice'
 
 const [ClassProvider, useClassContext] = constate(() =>
-  useReducer(classReducer, classState)
+  useReducer(classReducer, initialState)
 )
 
 export { ClassProvider, useClassContext }
