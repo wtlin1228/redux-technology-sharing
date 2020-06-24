@@ -1,4 +1,7 @@
-import React, { useState, useEffect } from 'react'
+import React, { useEffect } from 'react'
+import { Observable } from 'rxjs'
+import { map, switchMap, catchError } from 'rxjs/operators'
+import { useEventCallback } from 'rxjs-hooks'
 
 // utils
 import { getStudentsByListId } from 'core/Class'
@@ -19,19 +22,29 @@ import ClassList from '../components/ClassList'
 // self-defined-components
 
 const ClassListContainer = () => {
-  const [selectedListId, setSelectedListId] = useState('0')
-
   const [classState, classDispatcher] = useClassContext()
-
-  useEffect(() => {
-    classDispatcher(fetchStudentlistAsync({ listId: selectedListId }))
-    getStudentsByListId(selectedListId)
-      .then((response) => classDispatcher(fetchStudentlistSuccess(response)))
-      .catch((error) => classDispatcher(fetchStudentlistFailure(error)))
-  }, [selectedListId, classDispatcher])
 
   const { isLoading, students } = classState
   const studentsCount = students.length
+
+  const [handleTabClick] = useEventCallback((listId$) =>
+    listId$.pipe(
+      map((listId) => {
+        classDispatcher(fetchStudentlistAsync(listId))
+        return listId
+      }),
+      switchMap((listId) =>
+        getStudentsByListIdObservable(listId).pipe(
+          map((response) => classDispatcher(fetchStudentlistSuccess(response))),
+          catchError((error) => classDispatcher(fetchStudentlistFailure(error)))
+        )
+      )
+    )
+  )
+
+  useEffect(() => {
+    handleTabClick(0)
+  }, [handleTabClick])
 
   return (
     <>
@@ -39,7 +52,7 @@ const ClassListContainer = () => {
         學生數：{studentsCount}
       </h1>
       <ClassList
-        onTabClick={setSelectedListId}
+        onTabClick={handleTabClick}
         students={students}
         isLoading={isLoading}
       />
@@ -48,3 +61,13 @@ const ClassListContainer = () => {
 }
 
 export default ClassListContainer
+
+const getStudentsByListIdObservable = (listId) =>
+  Observable.create((observer) => {
+    getStudentsByListId(listId)
+      .then((response) => {
+        observer.next(response)
+        observer.complete()
+      })
+      .catch(() => observer.error())
+  })
