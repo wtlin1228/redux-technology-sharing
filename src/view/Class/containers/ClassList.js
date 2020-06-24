@@ -12,6 +12,7 @@ import { fetchStudentlistAsync } from 'core/Class'
 
 // components
 import ClassList from '../components/ClassList'
+import Foo from './Foo'
 
 // self-defined-components
 
@@ -42,6 +43,7 @@ const ClassListContainer = ({
         students={students}
         isLoading={isLoading}
       />
+      <Foo />
     </>
   )
 }
