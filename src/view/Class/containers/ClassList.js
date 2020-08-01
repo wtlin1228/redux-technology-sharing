@@ -8,7 +8,7 @@ import { studentsCountSelector } from 'core/Class'
 // assets
 
 // actions
-import { fetchStudentlistAsync } from 'core/Class'
+import { fetchStudentlist } from 'core/Class'
 
 // components
 import ClassList from '../components/ClassList'
@@ -19,13 +19,13 @@ const ClassListContainer = ({
   students,
   isLoading,
   studentsCount,
-  fetchStudentlistAsync,
+  fetchStudentlist,
 }) => {
   const [selectedListId, setSelectedListId] = useState('0')
 
   const handleClassChange = useCallback(
-    (listId) => fetchStudentlistAsync({ listId }),
-    [fetchStudentlistAsync]
+    (listId) => fetchStudentlist({ listId }),
+    [fetchStudentlist]
   )
 
   useEffect(() => {
@@ -55,7 +55,7 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = (dispatch) =>
   bindActionCreators(
     {
-      fetchStudentlistAsync,
+      fetchStudentlist,
     },
     dispatch
   )
