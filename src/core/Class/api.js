@@ -18,7 +18,7 @@ const studentsIdTable = {
 export function getStudentsByListId(listId) {
   return new Promise((resolve, reject) => {
     setTimeout(function resolveApiResponse() {
-      reject()
+      // reject()
       resolve({
         listId,
         coachName: '唐唐',

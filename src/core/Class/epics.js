@@ -7,9 +7,12 @@ import {
   fetchStudentlistSuccess,
   fetchStudentlistFailure,
 } from './slice'
-import { getStudentsByListId } from './api'
 
-const fetchStudentlistRequestEpic = (action$) =>
+const fetchStudentlistRequestEpic = (
+  action$,
+  state$,
+  { getStudentsByListId }
+) =>
   action$.pipe(
     ofType(fetchStudentlist.type),
     switchMap((action) =>
